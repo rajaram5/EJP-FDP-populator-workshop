@@ -4,7 +4,7 @@ class Utils:
 
     def get_catalog_body(self, catalog):
         catalog_body = None
-        with open('templates/catalog.mustache', 'r') as f:
+        with open('../templates/catalog.mustache', 'r') as f:
             catalog_body = chevron.render(f, {'title': catalog.TITLE, 'description': catalog.DESCRIPTION,
                                               'fdp_url': catalog.FDP_URL})
         return catalog_body
@@ -23,7 +23,7 @@ class Utils:
             theme_str = theme_str + " <" + theme + ">,"
         theme_str = theme_str[:-1]
 
-        with open('templates/resource.mustache', 'r') as f:
+        with open('../templates/resource.mustache', 'r') as f:
             resource_body = chevron.render(f, {'resourceType': resource.TYPE, 'title': resource.TITLE,
                                                'description': resource.DESCRIPTION, 'catalog_url': catalog_url,
                                                 'keyword': keyword_str, 'theme': theme_str,
