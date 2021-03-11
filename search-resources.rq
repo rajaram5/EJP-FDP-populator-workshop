@@ -20,10 +20,13 @@ PREFIX fdo: <http://rdf.biosemantics.org/ontologies/fdp-o#>
 SELECT DISTINCT ?resource ?id ?title ?description ?homepage ?resourceType WHERE {
    ?resource a ?resourceType ;
              dcat:theme ?_orphaCode_iri;
-             dcterm:description ?description;
              dcterm:title ?title;
-             dcat:landingPage ?homepage;
              fdo:metadataIdentifier [ dcterm:identifier ?id].
+
+  OPTIONAL {
+             ?resource dcterm:description ?description;
+             dcat:landingPage ?homepage;
+  }
 
   FILTER ((?resourceType = dcat-ext:Biobank) || (?resourceType = dcat-ext:PatientRegistry))
 }
