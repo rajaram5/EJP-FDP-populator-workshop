@@ -1,0 +1,29 @@
+#+ endpoint: http://ejprd.fair-dtls.surf-hosted.nl:8095/blazegraph/namespace/kb/sparql
+#+ endpoint_in_url: False
+#+ description: Get resources for a given ordo URL.
+#+ defaults:
+#+   - orphaCode: http://www.orpha.net/ORDO/Orphanet_14
+#+ transform: {
+#+     "id": "?id",
+#+     "type": "?resourceType",
+#+     "name": "?title",
+#+     "description": "?description",
+#+     "homepage": "?homepage",
+#+     "$anchor": "id"
+#+   }
+
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcat-ext: <http://purl.org/biosemantics-lumc/ontologies/dcat-extension/>
+PREFIX dcterm: <http://purl.org/dc/terms/>
+PREFIX fdo: <http://rdf.biosemantics.org/ontologies/fdp-o#>
+
+SELECT DISTINCT ?resource ?id ?title ?description ?homepage ?resourceType WHERE {
+   ?resource a ?resourceType ;
+             dcat:theme ?_orphaCode_iri;
+             dcterm:description ?description;
+             dcterm:title ?title;
+             dcat:landingPage ?homepage;
+             fdo:metadataIdentifier [ dcterm:identifier ?id].
+
+  FILTER ((?resourceType = dcat-ext:Biobank) || (?resourceType = dcat-ext:PatientRegistry))
+}
